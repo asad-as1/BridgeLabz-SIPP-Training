@@ -1,0 +1,97 @@
+START
+
+DEFINE CLASS Customer
+    ATTRIBUTES:
+        name
+        address
+        phoneNumber
+
+    CONSTRUCTOR(name, address, phoneNumber)
+        SET this.name = name
+        SET this.address = address
+        SET this.phoneNumber = phoneNumber
+
+    METHOD getDetails()
+        RETURN "Customer Name: " + name + ", Address: " + address + ", Phone: " + phoneNumber
+END CLASS
+
+
+DEFINE CLASS Restaurant
+    ATTRIBUTES:
+        restaurantName
+        restaurantAddress
+        menuItems
+        customer  ← Customer object  (COMPOSITION)
+
+    CONSTRUCTOR(restaurantName, restaurantAddress, menuItems, customer)
+        SET this.restaurantName = restaurantName
+        SET this.restaurantAddress = restaurantAddress
+        SET this.menuItems = menuItems
+        SET this.customer = customer
+
+    METHOD getDetails()
+        RETURN "Restaurant: " + restaurantName + 
+               ", Address: " + restaurantAddress + 
+               ", Menu: " + menuItems + 
+               " | Customer Info: [" + customer.getDetails() + "]"
+END CLASS
+
+
+DEFINE CLASS DeliveryBoy
+    ATTRIBUTES:
+        name
+        contactNumber
+        vehicleNumber
+
+    CONSTRUCTOR(name, contactNumber, vehicleNumber)
+        SET this.name = name
+        SET this.contactNumber = contactNumber
+        SET this.vehicleNumber = vehicleNumber
+
+    METHOD getDetails()
+        RETURN "Delivery Boy: " + name + ", Contact: " + contactNumber + ", Vehicle: " + vehicleNumber
+END CLASS
+
+
+DEFINE CLASS Order
+    ATTRIBUTES:
+        orderId
+        restaurant  ← Restaurant object  (COMPOSITION)
+        deliveryBoy ← DeliveryBoy object  (COMPOSITION)
+        items
+        totalAmount
+
+    CONSTRUCTOR(orderId, restaurant, deliveryBoy, items, totalAmount)
+        SET this.orderId = orderId
+        SET this.restaurant = restaurant
+        SET this.deliveryBoy = deliveryBoy
+        SET this.items = items
+        SET this.totalAmount = totalAmount
+
+    METHOD placeOrder()
+        PRINT "Order placed successfully for: " + restaurant.customer.getDetails()
+
+    METHOD cancelOrder()
+        PRINT "Order " + orderId + " has been cancelled."
+
+    METHOD printOrderDetails()
+        PRINT "===== ORDER DETAILS ====="
+        PRINT "Order ID: " + orderId
+        PRINT restaurant.getDetails()
+        PRINT deliveryBoy.getDetails()
+        PRINT "Items: " + items
+        PRINT "Total Amount: " + totalAmount
+END CLASS
+
+
+MAIN:
+    CREATE Customer c1 = NEW Customer("John Doe", "123 Street", "9876543210")
+    CREATE Restaurant r1 = NEW Restaurant("Pizza Palace", "45 Main Road", ["Pizza", "Pasta"], c1)
+    CREATE DeliveryBoy d1 = NEW DeliveryBoy("Mike", "9123456789", "KA05AB1234")
+    CREATE Order o1 = NEW Order("O101", r1, d1, ["Pizza"], 499)
+
+    o1.placeOrder()
+    o1.printOrderDetails()
+END
+
+END

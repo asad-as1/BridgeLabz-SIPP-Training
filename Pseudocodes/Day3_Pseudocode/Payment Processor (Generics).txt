@@ -1,0 +1,34 @@
+CLASS Transaction<T>
+    ATTRIBUTES:
+        transactionId
+        paymentData ← T type
+    METHODS:
+        processTransaction():
+            print "Processing " + paymentData
+END CLASS
+
+CLASS UPI
+    ATTRIBUTES: upiId, amount
+END CLASS
+
+CLASS Card
+    ATTRIBUTES: cardNumber, expiryDate, amount
+END CLASS
+
+CLASS NetBanking
+    ATTRIBUTES: bankName, accountNumber, amount
+END CLASS
+
+MAIN:
+    upiPayment = UPI("user@upi", 500)
+    cardPayment = Card("1234-5678-9999", "12/26", 1000)
+    netBankingPayment = NetBanking("HDFC", "ACC12345", 2000)
+
+    upiTransaction = Transaction<UPI>(upiPayment)
+    cardTransaction = Transaction<Card>(cardPayment)
+    netTransaction = Transaction<NetBanking>(netBankingPayment)
+
+    upiTransaction.processTransaction()
+    cardTransaction.processTransaction()
+    netTransaction.processTransaction()
+END
