@@ -1,0 +1,14 @@
+START
+DEFINE CLASS Member
+    ATTRIBUTE name
+    ATTRIBUTE id
+    ATTRIBUTE membershipDate
+
+    METHOD checkValidity()
+        SET difference = currentDate - membershipDate
+        IF difference < 1 YEAR THEN
+            RETURN Valid
+        ELSE
+            RETURN InValid
+END CLASS
+END

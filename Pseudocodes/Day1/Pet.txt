@@ -1,0 +1,26 @@
+START
+DEFINE CLASS Pet
+    ATTRIBUTE name
+    ATTRIBUTE age
+    ATTRIBUTE color
+
+    CONSTRUCTOR(name, age, color)
+        SET this.name = name
+        SET this.age = age
+        SET this.color = color
+END CLASS
+
+DEFINE CLASS Dog EXTENDS Pet
+    ATTRIBUTE breed
+    ATTRIBUTE sound
+END CLASS
+
+DEFINE CLASS Cat EXTENDS Pet
+    ATTRIBUTE breed
+    ATTRIBUTE sound
+END CLASS
+
+DEFINE CLASS Bird EXTENDS Pet
+    ATTRIBUTE sound
+END CLASS
+END
