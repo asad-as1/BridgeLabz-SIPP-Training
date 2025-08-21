@@ -1,0 +1,27 @@
+BEGIN
+    DEFINE ENUM TrafficLight { RED, YELLOW, GREEN }
+
+    DEFINE CLASS TrafficController
+        ATTRIBUTE currentLight (type TrafficLight)
+
+        DEFINE CONSTRUCTOR(initialLight)
+            SET currentLight = initialLight
+
+        DEFINE METHOD switchLight()
+            IF currentLight == RED
+                SET currentLight = GREEN
+            ELSE IF currentLight == GREEN
+                SET currentLight = YELLOW
+            ELSE IF currentLight == YELLOW
+                SET currentLight = RED
+
+        DEFINE METHOD startSimulation(interval)
+            LOOP infinitely
+                PRINT currentLight
+                WAIT interval seconds
+                CALL switchLight()
+
+    DEFINE MAIN METHOD
+        INITIALIZE signalController WITH starting light = RED
+        CALL signalController.startSimulation(interval)
+END
