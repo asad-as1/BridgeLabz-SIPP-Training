@@ -1,0 +1,24 @@
+START
+DEFINE CLASS UndoRevert
+    ATTRIBUTE text
+    ATTRIBUTE originalText
+    ATTRIBUTE undoStack (stack of strings)
+
+    CONSTRUCTOR(text)
+        SET this.text = text
+        SET this.originalText = text
+        INITIALIZE undoStack AS empty stack
+
+    METHOD addText(newText)
+        PUSH text INTO undoStack
+        SET text = text + newText
+
+    METHOD undo()
+        IF undoStack IS NOT empty THEN
+            SET text = POP FROM undoStack
+
+    METHOD revert()
+        SET text = originalText
+        CLEAR undoStack
+END CLASS
+END
