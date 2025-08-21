@@ -1,0 +1,34 @@
+BEGIN
+    DEFINE CLASS Account
+        ATTRIBUTE accountNumber
+        ATTRIBUTE balance
+
+        DEFINE METHOD withdraw(amount)
+            // To be overridden by subclasses
+
+        DEFINE METHOD deposit(amount)
+            INCREASE balance BY amount
+
+    DEFINE CLASS Saving EXTENDS Account
+        ATTRIBUTE minimumBalance
+
+        DEFINE METHOD withdraw(amount)
+            IF balance - amount >= minimumBalance
+                DECREASE balance BY amount
+            ELSE
+                PRINT "Insufficient funds"
+
+    DEFINE CLASS Current EXTENDS Account
+        ATTRIBUTE overdraftLimit
+
+        DEFINE METHOD withdraw(amount)
+            IF balance - amount >= -overdraftLimit
+                DECREASE balance BY amount
+            ELSE
+                PRINT "Overdraft limit exceeded"
+
+    DEFINE MAIN METHOD
+        INITIALIZE savingAccount
+        INITIALIZE currentAccount
+        PERFORM deposit and withdraw operations ON accounts
+END

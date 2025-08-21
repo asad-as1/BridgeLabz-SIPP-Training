@@ -1,0 +1,35 @@
+BEGIN
+    DEFINE ABSTRACT CLASS Vehicle
+        ATTRIBUTE model
+        ATTRIBUTE registrationNumber
+        DEFINE ABSTRACT METHOD displayInfo()
+
+    DEFINE INTERFACE Rentable
+        DEFINE METHOD rent()
+
+    DEFINE CLASS Car EXTENDS Vehicle IMPLEMENTS Rentable
+        DEFINE METHOD displayInfo()
+            PRINT "Car details"
+        DEFINE METHOD rent()
+            PRINT "Car rented"
+
+    DEFINE CLASS Bike EXTENDS Vehicle IMPLEMENTS Rentable
+        DEFINE METHOD displayInfo()
+            PRINT "Bike details"
+        DEFINE METHOD rent()
+            PRINT "Bike rented"
+
+    DEFINE CLASS VehicleFactory
+        DEFINE METHOD createVehicle(type)
+            IF type == "Car"
+                RETURN new Car()
+            ELSE IF type == "Bike"
+                RETURN new Bike()
+
+    DEFINE MAIN METHOD
+        INITIALIZE vehicleList
+        FOR EACH type IN requestedVehicleTypes
+            vehicle = VehicleFactory.createVehicle(type)
+            CALL vehicle.rent()
+            CALL vehicle.displayInfo()
+END
