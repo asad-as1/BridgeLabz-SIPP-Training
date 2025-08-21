@@ -1,0 +1,39 @@
+BEGIN
+    DEFINE INTERFACE DiagnosisStrategy
+        METHOD diagnose(symptoms: List) RETURNS List
+
+    DEFINE CLASS RuleBasedDiagnosis IMPLEMENTS DiagnosisStrategy
+        METHOD diagnose(symptoms: List)
+            MATCH symptoms WITH predefinedRules
+            RETURN matchingDiseases
+
+    DEFINE CLASS AIBasedDiagnosis IMPLEMENTS DiagnosisStrategy
+        METHOD diagnose(symptoms: List)
+            LOAD trainedAIModel
+            PREDICT diseases FROM symptoms
+            RETURN predictedDiseases
+
+    DEFINE CLASS ProbabilityBasedDiagnosis IMPLEMENTS DiagnosisStrategy
+        METHOD diagnose(symptoms: List)
+            CALCULATE probabilityScore FOR each possible disease
+            RETURN diseases WITH scores
+
+    DEFINE CLASS DiagnosisContext
+        ATTRIBUTE strategy: DiagnosisStrategy
+        METHOD setStrategy(strategy: DiagnosisStrategy)
+            SET this.strategy = strategy
+        METHOD executeDiagnosis(symptoms: List)
+            RETURN strategy.diagnose(symptoms)
+
+    DEFINE MAIN
+        CREATE context AS DiagnosisContext
+
+        SET context.strategy = RuleBasedDiagnosis
+        CALL context.executeDiagnosis(symptomsForGeneralMedicine)
+
+        SET context.strategy = AIBasedDiagnosis
+        CALL context.executeDiagnosis(symptomsForNeurology)
+
+        SET context.strategy = GeneticPatternDiagnosis (future strategy)
+        CALL context.executeDiagnosis(symptomsForGenetics)
+END
