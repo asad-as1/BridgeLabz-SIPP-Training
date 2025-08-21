@@ -1,0 +1,14 @@
+BEGIN
+    INITIALIZE circularArray timeSlots WITH durations for each question
+    DEFINE VARIABLE warningThreshold
+
+    FOR EACH questionIndex IN quiz
+        SET timer = timeSlots[questionIndex MOD length_of(timeSlots)]
+        WHILE timer > 0
+            IF timer == warningThreshold
+                DISPLAY "Time almost up!"
+            DECREMENT timer BY 1
+    END FOR
+
+    END quiz AFTER all questions attempted
+END

@@ -1,0 +1,16 @@
+BEGIN
+    DEFINE CLASS Job
+        ATTRIBUTE id
+        ATTRIBUTE deadline
+        ATTRIBUTE processingTime
+
+    INITIALIZE priorityQueue jobsQueue SORTED BY earliest deadline
+
+    WHILE jobsQueue IS NOT empty
+        job = POLL from jobsQueue
+        PROCESS job
+        UPDATE systemClock BY job.processingTime
+        RECORD job.id IN executionOrder
+
+    OUTPUT executionOrder
+END
