@@ -1,8 +1,9 @@
 public interface TransportService {
     String getName();
+    int getCapacity();
     double getFare();
-    void showSchedule();
+
     default void printServiceDetails() {
-        System.out.println(getName() + " | Fare: " + getFare());
+        System.out.println(getName() + " | Capacity: " + getCapacity() + " | Fare: " + getFare());
     }
 }
